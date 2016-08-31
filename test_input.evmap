@@ -1,0 +1,60 @@
+An additional use case I have in mind is this:
+
+The designer starts with an idea/sketch of a single scene like a D&D One Page Dungeon
+The designer makes a text file in a similar format to the example below (using plain old text editor or something more full-featured like JavE)
+The designer runs the parser, which outputs a batch script to create the scene as described
+The designer looks through the batch script, tweaks it as necessary for their needs
+The designer can run (or share) their batch script as needed
+Parsing a map straight into the game seems like it would be a bit error-prone, so this would keep the parsing step offline. Also, the parser wouldn't need to change when the default values change for each scene/setting. The user can have access to some defaults through the map input format, and the scene/setting details can stay separate from the parser function. The output of the parser would be the batch script to create the scene, with some placeholders to fill in blanks. The user would correct the output for the scene they are creating, not necessarily change the parser to match the setting.
+
+I hope that all makes sense, I'm very new to Evennia, and fairly new to Python. Does this seem like it would be too much of a headache for the user to go through the extra step, or do you guys think this would actually make it easier to do world-building a scene at a time?
+
+# Identify build parameters up front
+#
+# Draw a map using any of the following characters: .,|-+/\:'"
+# Identify room numbers using a number in square brackets in the room
+# Identify exits with an [X] between the rooms being connected
+# Identify up/down exists with [U:#] or [D:#], where # is the room target
+#
+# Below the map, describe the room and objects
+
+default_exit_name = 'door'
+wrap_descriptions_at_column = 50
+justify_descriptions = False
+
+    .-----------------------.-------------------------.
+    |                       |             |           |
+    |               [U:5]   |            [X]   [3]    |
+    |                       |             |           |
+    |        [1]           [X]     [2]    |           |
+    |                       |             +-----------|
+    |               [D:6]   |             |  [4]      |
+    |                       |             |           |
+    |                       |            [X]          |
+    |                       |             |           |
+    '---------[X]-----------"-------------------------'
+
+    .-------------------.         .-------------------.
+    |                   |         |                   |
+    |                   |         |                   |
+    |       [6]         |         |       [5]         |
+    |           [U:1]   |         |           [D:1]   |
+    |                   |         |                   |
+    '-------------------'         '-------------------'
+
+# r#:Room Title
+# d#:Description
+# o#.n:Object title for nth object in room #
+
+
+r1:Living Room
+d1:You see a common country living room with standard furniture.
+o1.1:Couch
+d1.1:This couch is old and threadbare.
+o1.2:Cabinet
+
+r6:Basement
+d6:This smelly basement is small, but it smells.
+
+r2:The Dining room
+d2:Blah blah blah, etc etc.......
